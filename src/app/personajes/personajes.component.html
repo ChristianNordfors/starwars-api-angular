@@ -1,0 +1,164 @@
+
+
+<div class="container mt-4">
+
+
+<div class="card shadow">
+  <h3 class="card-header">{{titulo}}</h3>
+
+<div class="card-body">
+
+
+
+  <div class="card-title text-right">
+
+
+
+      <div class="form-inline">
+
+          <label for="idBusqueda" class="mr-1">Búsqueda por Id</label>
+          <input type="number" [(ngModel)]="valor" class="form-control col-sm-1" name="idBusqueda" id="idBusqueda" (keyup.enter)="buscarPersonaje(valor)">
+          <button (click)="buscarPersonaje(valor)" type="button" name="button" class="btn btn-secondary" [disabled]="(valor==null || valor < 1) || loading == true">
+            <span *ngIf="loading == true" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            {{(loading!=true)?'Buscar':'Buscando..'}}
+          </button>
+
+      </div>
+
+      <div *ngIf="error?.length > 0 " class="alert alert-danger text-center mt-2">{{error}}</div>
+      <div *ngIf="mensaje?.length > 0 " class="alert alert-success text-center mt-2">{{mensaje}}</div>
+
+  </div>
+
+
+
+  <hr *ngIf="personaje?.planeta!=null">
+
+  <h2 *ngIf="loading==true">Cargando...</h2>
+
+  <form *ngIf="personaje?.planeta!=null && loading != true">
+
+    <div class="form-group row">
+        <label for="id" class="col-sm-2 col-form-label">Id</label>
+        <div class="col-sm-10">
+          <input type="number" class="form-control" name="id"  [(ngModel)]="personaje.id" [disabled]="personaje.id">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="nombre"  [(ngModel)]="personaje.nombre" [disabled]="personaje.nombre == personajeComparacion.nombre && personaje.nombre != null">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="nombre" class="col-sm-2 col-form-label">Altura</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="altura" [(ngModel)]="personaje.altura" [disabled]="personaje.altura == personajeComparacion.altura && personaje.altura != null">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="nombre" class="col-sm-2 col-form-label">Peso</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="peso" [(ngModel)]="personaje.peso" [disabled]="personaje.peso == personajeComparacion.peso && personaje.peso != null">
+        </div>
+    </div>
+
+
+
+    <div class="form-group row">
+        <label for="piel" class="col-sm-2 col-form-label">Color de piel</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="piel" [(ngModel)]="personaje.piel" [disabled]="personaje.piel == personajeComparacion.piel && personaje.piel != null">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="pelo" class="col-sm-2 col-form-label">Color de pelo</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="pelo" [(ngModel)]="personaje.pelo" [disabled]="personaje.pelo == personajeComparacion.pelo && personaje.pelo != null">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="ojos" class="col-sm-2 col-form-label">Color de ojos</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="ojos" [(ngModel)]="personaje.ojos" [disabled]="personaje.ojos == personajeComparacion.ojos && personaje.ojos != null">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="fechaNacimiento" class="col-sm-2 col-form-label">Fecha de nacimiento</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="fechaNacimiento" [(ngModel)]="personaje.fechaNacimiento" [disabled]="personaje.fechaNacimiento == personajeComparacion.fechaNacimiento && personaje.fechaNacimiento != null">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="genero" class="col-sm-2 col-form-label">Género</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="genero" [(ngModel)]="personaje.genero" [disabled]="personaje.genero == personajeComparacion.genero && personaje.genero != null">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="planeta" class="col-sm-2 col-form-label">Planeta</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="planeta" [(ngModel)]="personaje.planeta" [disabled]="personaje.planeta == personajeComparacion.planeta && personaje.planeta != null">
+        </div>
+    </div>
+
+
+    <div class="form-group text-center">
+      <button class="btn btn-block btn-primary" (click)="crearPersonaje()">Crear</button>
+    </div>
+
+  </form>
+
+</div>
+</div>
+
+
+
+
+
+<hr *ngIf="personajes?.length > 0">
+
+
+<table *ngIf="personajes?.length > 0" class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Altura</th>
+      <th>Peso</th>
+      <th>Pelo</th>
+      <th>Piel</th>
+      <th>Ojos</th>
+      <th>Nacimiento</th>
+      <th>Género</th>
+      <th>Planeta</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let personaje of personajes">
+      <td>{{personaje.id}}</td>
+      <td>{{personaje.nombre}}</td>
+      <td>{{personaje.altura}}</td>
+      <td>{{personaje.peso}}</td>
+      <td>{{personaje.pelo}}</td>
+      <td>{{personaje.piel}}</td>
+      <td>{{personaje.ojos}}</td>
+      <td>{{personaje.fechaNacimiento}}</td>
+      <td>{{personaje.genero}}</td>
+      <td>{{personaje.planeta}}</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+</div>
